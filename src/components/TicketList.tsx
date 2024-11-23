@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import TicketListIcon from "./TicketListIcon";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -68,9 +69,7 @@ export default function TicketList() {
           return (
             <div key={ticket.id}>
               <div className="flex gap-3 mb-3">
-                <div className={`max-h-[48px] min-h-[48px] max-w-[48px] min-w-[48px] flex items-center justify-center rounded-full ${iconBgColor}`}>
-                  <TiWarningOutline className={`-mt-0.5 text-2xl ${iconTextColor}`} />
-                </div>
+                <TicketListIcon iconBgColor={iconBgColor} iconTextColor={iconTextColor} pid={ticket.pid} />
                 <div className="grow">
                   <div className="flex justify-between items-center">
                     <div className="text-[12px] font-bold">{ticket.description}</div>
