@@ -75,24 +75,21 @@ export default function Sidebar() {
             </Link>
             <div className="flex flex-col group gap-4">
               <div 
-                className={`dropdown-toggle relative flex gap-3 items-center cursor-pointer ${pathname.includes("/configuration") ? ' text-[#2f7ef4]' : 'text-[#A3A3A3]'} group-hover:text-[#2f7ef4]`}
+                className={`relative flex gap-3 items-center cursor-pointer ${pathname.includes("/configuration") ? ' text-[#2f7ef4]' : 'text-[#A3A3A3]'} group-hover:text-[#2f7ef4]`}
                 onClick={() => setIsShownConfigurationMenu(true)}
                 >
                 <div className={`absolute -left-4 top-1.25 border rounded-full h-2 w-2 bg-[#2f7ef4] ${pathname.includes("/configuration") ? "opacity-100" : "opacity-0"} group-hover:opacity-100 transition-opacity duration-300`}></div>
                 <div><FiSettings className="text-md"/></div>
                 <div><span className="font-medium">CONFIGURATION</span></div>
-                <div className="bg-[#F2F4F7] px-2 rounded-lg"><span className="font-medium">7</span></div>
               </div>
-              <div className={`px-3 overflow-hidden transition-all duration-500 ease-in-out ${isShownConfigurationMenu ? "max-h-full opacity-100" : "max-h-0 opacity-0"}`}>
-                <div className="flex flex-col gap-3">
-                  {configurationMenus.map((menu, index) => {
-                    return (
-                      <Link href={menu.link} key={index} className={`block w-full font-medium cursor-pointer ${pathname === `${menu.link}` ? ' text-[#2f7ef4]' : 'text-[#A3A3A3]'} hover:text-[#2f7ef4]`}>
-                      <span className="text-nowrap">{menu.menu}</span>
-                    </Link>
-                    );
-                  })}
-                </div>
+              <div className="flex flex-col gap-3">
+                {configurationMenus.map((menu, index) => {
+                  return (
+                    <Link href={menu.link} key={index} className={`block w-full font-medium cursor-pointer ${pathname === `${menu.link}` ? ' text-[#2f7ef4]' : 'text-[#A3A3A3]'} hover:text-[#2f7ef4]`}>
+                    <span className="text-nowrap">{menu.menu}</span>
+                  </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
