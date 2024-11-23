@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import TicketListIcon from "./TicketListIcon";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -15,7 +16,8 @@ interface TicketLists {
   operator: string,
   acknowledgedBy: string,
   pid: number,
-  deviceDate: string
+  deviceDate: string,
+  Devicename: string,
 }
 
 export default function TicketList() {
@@ -65,17 +67,12 @@ export default function TicketList() {
               break;
           }
           return (
-            <div key={ticket.id} 
-            // className="delay-75 opacity-1 animate-fade-in transform transition-all duration-300"
-            >
+            <div key={ticket.id}>
               <div className="flex gap-3 mb-3">
-                <div className={`max-h-[48px] min-h-[48px] max-w-[48px] min-w-[48px] flex items-center justify-center rounded-full ${iconBgColor}`}>
-                  <TiWarningOutline className={`-mt-0.5 text-2xl ${iconTextColor}`} />
-                </div>
+                <TicketListIcon iconBgColor={iconBgColor} iconTextColor={iconTextColor} pid={ticket.pid} />
                 <div className="grow">
                   <div className="flex justify-between items-center">
                     <div className="text-[12px] font-bold">{ticket.description}</div>
-                    {/* <div className="text-[9px] text-[#a7a9aa]">TickedID: {ticket.id}</div> */}
                   </div>
                   <div className="grid grid-cols-2 items-top text-[10px] text-[#a7a9aa]">
                     <div className="col-1">

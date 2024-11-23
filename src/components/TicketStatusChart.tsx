@@ -77,8 +77,20 @@ export default function TicketStatusChart() {
   return (
     <div className='flex flex-col justify-center items-center'>
       <div style={{ width: '130px', display: 'inline-block' }} className="relative">
-        <HighchartsReact highcharts={Highcharts} options={options} />
-        <div className='absolute flex top-[50px] left-[50px]'>
+        <HighchartsReact 
+          highcharts={Highcharts}
+          options={options}
+          containerProps={{
+            style: {
+              zIndex: 101,
+              position: 'relative',
+            },
+          }} 
+        />
+        <div 
+          className='absolute flex top-[50px] left-[50px]'
+          style={{ zIndex: 100 }}
+        >
           <Image 
             src="/images/gears.png" 
             alt="gear" 
