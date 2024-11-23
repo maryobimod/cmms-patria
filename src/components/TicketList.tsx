@@ -1,5 +1,4 @@
-import { TiWarningOutline } from "react-icons/ti";
-import { database } from "@/lib/firebase";
+import { database1, database2 } from "@/lib/firebase";
 import { ref, onValue, query, orderByKey, limitToLast, get } from "firebase/database";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
@@ -16,6 +15,7 @@ interface TicketLists {
   operator: string,
   acknowledgedBy: string,
   pid: number,
+  incident: string,
   deviceDate: string,
   Devicename: string,
 }
@@ -24,8 +24,8 @@ export default function TicketList() {
   const [ticketLists, setTicketLists] = useState([]);
   useEffect(() => {
     // Referensi ke node "items" di Realtime Database
-    const dbRef = ref(database, "data");
-    const q = query(dbRef, orderByKey(), limitToLast(100));
+    const dbRef = ref(database2, "data");
+    const q = query(dbRef, orderByKey(), limitToLast(500));
     const unsubscribe = onValue(q, async (snapshot) => {
         const data = await snapshot.toJSON();
         if (snapshot.exists()) {
@@ -34,7 +34,7 @@ export default function TicketList() {
             ...(value as Omit<TicketLists, "">),
           }));
           const dataSorted = dataFormatted.sort((a, b) => new Date(b.deviceDate).getTime() - new Date(a.deviceDate).getTime());
-          setTicketLists(dataSorted);
+          setTicketLists(dataSorted.filter(item => item.incident == "Not Normal"));
         } else {
           setTicketLists([]);
         }
