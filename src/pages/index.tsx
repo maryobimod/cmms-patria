@@ -1,5 +1,6 @@
 import ParameterCategoryChart from "@/components/ParameterCategoryChart";
 import ProcessChart from "@/components/ProcessChart";
+import RealtimeChart from "@/components/RealtimeChart";
 import RollBendingChart from "@/components/RollBendingChart";
 import TicketStatusChart from "@/components/TicketStatusChart";
 import { TfiMore } from "react-icons/tfi";
@@ -24,6 +25,7 @@ export default function Dashboard() {
           <div><TfiMore className="text-lg text-[#a7a9aa]" /></div>
         </div>
         <div>
+          <RealtimeChart />
           {/* <RollBendingChart /> */}
           {/* <RollBendingChart /> */}
         </div>

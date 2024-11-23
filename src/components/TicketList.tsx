@@ -1,4 +1,4 @@
-import { database1, database2 } from "@/lib/firebase";
+import { database1 } from "@/lib/firebase";
 import { ref, onValue, query, orderByKey, limitToLast, get } from "firebase/database";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
@@ -24,7 +24,7 @@ export default function TicketList() {
   const [ticketLists, setTicketLists] = useState([]);
   useEffect(() => {
     // Referensi ke node "items" di Realtime Database
-    const dbRef = ref(database2, "data");
+    const dbRef = ref(database1, "data");
     const q = query(dbRef, orderByKey(), limitToLast(500));
     const unsubscribe = onValue(q, async (snapshot) => {
         const data = await snapshot.toJSON();
