@@ -23,7 +23,9 @@ export default function realTimeLineChartData(data: TicketListsType[]) {
     }
   });
 
-  const lablesSliced = dataLabels.slice(0, 10);
+  const diffLength = dataLabels.length - 10;
+  const x1 = diffLength > 0 ? diffLength : 0;
+  const lablesSliced = dataLabels.slice(x1, dataLabels.length);
   const labels = [];
   const pid1Value = [];
   const pid2Value = [];

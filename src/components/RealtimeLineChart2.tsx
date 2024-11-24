@@ -26,7 +26,7 @@ ChartJS.register(
   Legend
 );
 
-export default function RealtimeLineChart() {
+export default function RealtimeLineChart2() {
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -41,7 +41,7 @@ export default function RealtimeLineChart() {
 
   useEffect(() => {
     const dbRef = ref(database2, "data");
-    const q = query(dbRef, orderByKey(), limitToLast(100));
+    const q = query(dbRef, orderByKey(), limitToLast(200));
     
     // Mengambil data secara realtime dari Firebase
     onValue(q, (snapshot) => {
@@ -57,42 +57,40 @@ export default function RealtimeLineChart() {
         setChartData({
           labels: dataChart.labels,
           datasets: [
-            // {
-            //   label: "Batas Atas",
-            //   data: [8,8,8,8,8,8,8,8,8,1000],
-            //   borderColor: "red",
-            //   borderDash: [5,5],
-            //   fill: false,
-            // } as any,
-            // {
-            //   label: "Batas Bawah",
-            //   data: [0,0,0,0,0],
-            //   borderColor: "red",
-            //   borderDash: [5,5],
-            //   fill: false,
-            // } as any,
             {
-              label: "PID 1",
-              data: dataChart.pid1Value,
+              label: "PID 7",
+              data: dataChart.pid7Value,
               borderColor: "#1c538a",
               fill: false,
             } as any,
             {
-              label: "PID 2",
-              data: dataChart.pid2Value,
+              label: "PID 8",
+              data: dataChart.pid8Value,
               borderColor: "#a2c7ff",
               fill: false,
             } as any,
             {
-              label: "PID 3",
-              data: dataChart.pid3Value,
+              label: "PID 9",
+              data: dataChart.pid9Value,
               borderColor: "#2f7ef4",
               fill: false,
             } as any,
             {
-              label: "PID 4",
-              data: dataChart.pid4Value,
+              label: "PID 10",
+              data: dataChart.pid10Value,
               borderColor: "#30f2f2",
+              fill: false,
+            } as any,
+            {
+              label: "PID 11",
+              data: dataChart.pid11Value,
+              borderColor: "#74e0a5",
+              fill: false,
+            } as any,
+            {
+              label: "PID 12",
+              data: dataChart.pid12Value,
+              borderColor: "#9b46bf",
               fill: false,
             } as any,
           ],
@@ -104,13 +102,43 @@ export default function RealtimeLineChart() {
   const options = {
     plugins: {
       legend: {
-        display: false, // Sembunyikan legend
+        display: false,
       },
     },
     maintainAspectRatio: false,
   };
 
   return (
-    <Line data={chartData} options={options} />
+    <div>
+      <div>
+        <Line data={chartData} options={options} />
+      </div>
+      <div className="flex justify-center items-center gap-2 text-[12px] mt-1">
+        <div className="flex justify-center items-center gap-1">
+          <div className="w-1 p-1 bg-[#1c538a] rounded-full"></div>
+          <div>PID 7</div>
+        </div>
+        <div className="flex justify-center items-center gap-1">
+          <div className="w-1 p-1 bg-[#a2c7ff] rounded-full"></div>
+          <div>PID 8</div>
+        </div>
+        <div className="flex justify-center items-center gap-1">
+          <div className="w-1 p-1 bg-[#2f7ef4] rounded-full"></div>
+          <div>PID 9</div>
+        </div>
+        <div className="flex justify-center items-center gap-1">
+          <div className="w-1 p-1 bg-[#30f2f2] rounded-full"></div>
+          <div>PID 10</div>
+        </div>
+        <div className="flex justify-center items-center gap-1">
+          <div className="w-1 p-1 bg-[#74e0a5] rounded-full"></div>
+          <div>PID 11</div>
+        </div>
+        <div className="flex justify-center items-center gap-1">
+          <div className="w-1 p-1 bg-[#9b46bf] rounded-full"></div>
+          <div>PID 12</div>
+        </div>
+      </div>
+    </div>
   );
 }

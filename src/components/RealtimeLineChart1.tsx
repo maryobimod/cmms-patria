@@ -14,7 +14,6 @@ import {
 } from 'chart.js';
 import realTimeLineChartData from "@/lib/realtimeLineChartData";
 import TicketListsType from "@/models/TicketListsType";
-import realTimeLineChartData1 from "@/lib/realtimeLineChartData1";
 
 // Registrasi skala dan elemen Chart.js
 ChartJS.register(
@@ -42,7 +41,7 @@ export default function RealtimeLineChart1() {
 
   useEffect(() => {
     const dbRef = ref(database2, "data");
-    const q = query(dbRef, orderByKey(), limitToLast(1000));
+    const q = query(dbRef, orderByKey(), limitToLast(200));
     
     // Mengambil data secara realtime dari Firebase
     onValue(q, (snapshot) => {
@@ -53,54 +52,47 @@ export default function RealtimeLineChart1() {
           ...(value as Omit<TicketListsType, "">),
         }));
         const dataSorted = dataFormatted.sort((a, b) => new Date(b.deviceDate).getTime() - new Date(a.deviceDate).getTime());
-        const dataChart = realTimeLineChartData1(dataSorted);
-        const labels = dataChart.labels;
-        const pid1Value = dataChart.pid1Value;
-
-console.log(labels);
-console.log(pid1Value);
+        const dataChart = realTimeLineChartData(dataSorted);
 
         setChartData({
-          labels: labels,
+          labels: dataChart.labels,
           datasets: [
-            // {
-            //   label: "Batas Atas",
-            //   data: [8,8,8],
-            //   borderColor: "red",
-            //   borderDash: [5,5],
-            //   fill: false,
-            // } as any,
-            // {
-            //   label: "Batas Bawah",
-            //   data: [0,0,0,0,0],
-            //   borderColor: "red",
-            //   borderDash: [5,5],
-            //   fill: false,
-            // } as any,
             {
               label: "PID 1",
-              data: pid1Value,
+              data: dataChart.pid1Value,
               borderColor: "#1c538a",
               fill: false,
             } as any,
-            // {
-            //   label: "PID 2",
-            //   data: dataChart.pid2Value,
-            //   borderColor: "#1c538a",
-            //   fill: false,
-            // } as any,
-            // {
-            //   label: "PID 3",
-            //   data: dataChart.pid3Value,
-            //   borderColor: "#1c538a",
-            //   fill: false,
-            // } as any,
-            // {
-            //   label: "PID 4",
-            //   data: dataChart.pid4Value,
-            //   borderColor: "#1c538a",
-            //   fill: false,
-            // } as any,
+            {
+              label: "PID 2",
+              data: dataChart.pid2Value,
+              borderColor: "#a2c7ff",
+              fill: false,
+            } as any,
+            {
+              label: "PID 3",
+              data: dataChart.pid3Value,
+              borderColor: "#2f7ef4",
+              fill: false,
+            } as any,
+            {
+              label: "PID 4",
+              data: dataChart.pid4Value,
+              borderColor: "#30f2f2",
+              fill: false,
+            } as any,
+            {
+              label: "PID 5",
+              data: dataChart.pid5Value,
+              borderColor: "#74e0a5",
+              fill: false,
+            } as any,
+            {
+              label: "PID 6",
+              data: dataChart.pid6Value,
+              borderColor: "#9b46bf",
+              fill: false,
+            } as any,
           ],
         });
       }
@@ -110,10 +102,43 @@ console.log(pid1Value);
   const options = {
     plugins: {
       legend: {
-        display: false, // Sembunyikan legend
+        display: false,
       },
     },
+    maintainAspectRatio: false,
   };
 
-  return <Line data={chartData} options={options} />;
+  return (
+    <div>
+      <div>
+        <Line data={chartData} options={options} />
+      </div>
+      <div className="flex justify-center items-center gap-2 text-[12px] mt-1">
+        <div className="flex justify-center items-center gap-1">
+          <div className="w-1 p-1 bg-[#1c538a] rounded-full"></div>
+          <div>PID 1</div>
+        </div>
+        <div className="flex justify-center items-center gap-1">
+          <div className="w-1 p-1 bg-[#a2c7ff] rounded-full"></div>
+          <div>PID 2</div>
+        </div>
+        <div className="flex justify-center items-center gap-1">
+          <div className="w-1 p-1 bg-[#2f7ef4] rounded-full"></div>
+          <div>PID 3</div>
+        </div>
+        <div className="flex justify-center items-center gap-1">
+          <div className="w-1 p-1 bg-[#30f2f2] rounded-full"></div>
+          <div>PID 4</div>
+        </div>
+        <div className="flex justify-center items-center gap-1">
+          <div className="w-1 p-1 bg-[#74e0a5] rounded-full"></div>
+          <div>PID 5</div>
+        </div>
+        <div className="flex justify-center items-center gap-1">
+          <div className="w-1 p-1 bg-[#9b46bf] rounded-full"></div>
+          <div>PID 6</div>
+        </div>
+      </div>
+    </div>
+  );
 }
