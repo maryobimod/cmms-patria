@@ -5,23 +5,13 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import TicketListIcon from "./TicketListIcon";
+import TicketListsType from "@/models/TicketListsType";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-interface TicketLists {
-  id: number,
-  description: string,
-  operator: string,
-  acknowledgedBy: string,
-  pid: number,
-  incident: string,
-  deviceDate: string,
-  Devicename: string,
-}
-
 export default function TicketList() {
-  const [ticketLists, setTicketLists] = useState([]);
+  const [TicketListsType, setTicketListsType] = useState([]);
   useEffect(() => {
     // Referensi ke node "items" di Realtime Database
     const dbRef = ref(database1, "data");
@@ -29,14 +19,14 @@ export default function TicketList() {
     const unsubscribe = onValue(q, async (snapshot) => {
         const data = await snapshot.toJSON();
         if (snapshot.exists()) {
-          const dataFormatted: TicketLists[] = Object.entries(data).map(([key, value]) => ({
+          const dataFormatted: TicketListsType[] = Object.entries(data).map(([key, value]) => ({
             id: key,
-            ...(value as Omit<TicketLists, "">),
+            ...(value as Omit<TicketListsType, "">),
           }));
           const dataSorted = dataFormatted.sort((a, b) => new Date(b.deviceDate).getTime() - new Date(a.deviceDate).getTime());
-          setTicketLists(dataSorted.filter(item => item.incident == "Not Normal"));
+          setTicketListsType(dataSorted.filter(item => item.incident == "Not Normal"));
         } else {
-          setTicketLists([]);
+          setTicketListsType([]);
         }
     });
 
@@ -47,7 +37,7 @@ export default function TicketList() {
   return (
     <div>
       <div>
-        {ticketLists.map(ticket => {
+        {TicketListsType.map(ticket => {
           let iconBgColor = '';
           let iconTextColor = '';
           switch (ticket.incident) {
