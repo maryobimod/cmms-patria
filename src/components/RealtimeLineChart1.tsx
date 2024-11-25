@@ -53,7 +53,7 @@ export default function RealtimeLineChart1() {
         }));
         // const dataSorted = dataFormatted.sort((a, b) => new Date(b.deviceDate).getTime() - new Date(a.deviceDate).getTime());
         const dataChart = realTimeLineChartData(dataFormatted);
-        console.log(dataChart);
+
         setChartData({
           labels: dataChart.labels,
           datasets: [
