@@ -41,7 +41,7 @@ export default function RealtimeLineChart() {
 
   useEffect(() => {
     const dbRef = ref(database2, "data");
-    const q = query(dbRef, orderByKey(), limitToLast(100));
+    const q = query(dbRef, orderByKey(), limitToLast(25));
     
     // Mengambil data secara realtime dari Firebase
     onValue(q, (snapshot) => {

@@ -41,7 +41,7 @@ export default function RealtimeLineChart1() {
 
   useEffect(() => {
     const dbRef = ref(database2, "data");
-    const q = query(dbRef, orderByKey(), limitToLast(200));
+    const q = query(dbRef, orderByKey(), limitToLast(500));
     
     // Mengambil data secara realtime dari Firebase
     onValue(q, (snapshot) => {
@@ -51,9 +51,9 @@ export default function RealtimeLineChart1() {
           id: key,
           ...(value as Omit<TicketListsType, "">),
         }));
-        const dataSorted = dataFormatted.sort((a, b) => new Date(b.deviceDate).getTime() - new Date(a.deviceDate).getTime());
-        const dataChart = realTimeLineChartData(dataSorted);
-
+        // const dataSorted = dataFormatted.sort((a, b) => new Date(b.deviceDate).getTime() - new Date(a.deviceDate).getTime());
+        const dataChart = realTimeLineChartData(dataFormatted);
+        console.log(dataChart);
         setChartData({
           labels: dataChart.labels,
           datasets: [
