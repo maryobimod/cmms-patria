@@ -26,7 +26,7 @@ ChartJS.register(
   Legend
 );
 
-export default function RealtimeLineChart2() {
+export default function RealtimeLineChart1() {
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -41,7 +41,7 @@ export default function RealtimeLineChart2() {
 
   useEffect(() => {
     const dbRef = ref(database2, "data");
-    const q = query(dbRef, orderByKey(), limitToLast(200));
+    const q = query(dbRef, orderByKey(), limitToLast(500));
     
     // Mengambil data secara realtime dari Firebase
     onValue(q, (snapshot) => {
@@ -51,8 +51,8 @@ export default function RealtimeLineChart2() {
           id: key,
           ...(value as Omit<TicketListsType, "">),
         }));
-        const dataSorted = dataFormatted.sort((a, b) => new Date(b.deviceDate).getTime() - new Date(a.deviceDate).getTime());
-        const dataChart = realTimeLineChartData(dataSorted);
+        // const dataSorted = dataFormatted.sort((a, b) => new Date(b.deviceDate).getTime() - new Date(a.deviceDate).getTime());
+        const dataChart = realTimeLineChartData(dataFormatted);
 
         setChartData({
           labels: dataChart.labels,
