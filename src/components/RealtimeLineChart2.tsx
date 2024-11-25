@@ -12,8 +12,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import realTimeLineChartData from "@/lib/realtimeLineChartData";
 import TicketListsType from "@/models/TicketListsType";
+import dayjs from "dayjs";
 
 // Registrasi skala dan elemen Chart.js
 ChartJS.register(
@@ -25,6 +25,16 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
+const setValue = (dataPID: TicketListsType[]) => {
+  let value = 0;
+  dataPID.forEach(pid => value += pid.value);
+  if (value > 0) {
+    value = value/dataPID.length;
+  }
+
+  return value.toFixed(2);
+}
 
 export default function RealtimeLineChart1() {
   const [chartData, setChartData] = useState({
@@ -41,7 +51,7 @@ export default function RealtimeLineChart1() {
 
   useEffect(() => {
     const dbRef = ref(database2, "data");
-    const q = query(dbRef, orderByKey(), limitToLast(500));
+    const q = query(dbRef, orderByKey(), limitToLast(3000));
     
     // Mengambil data secara realtime dari Firebase
     onValue(q, (snapshot) => {
@@ -51,45 +61,119 @@ export default function RealtimeLineChart1() {
           id: key,
           ...(value as Omit<TicketListsType, "">),
         }));
-        // const dataSorted = dataFormatted.sort((a, b) => new Date(b.deviceDate).getTime() - new Date(a.deviceDate).getTime());
-        const dataChart = realTimeLineChartData(dataFormatted);
 
+        const dataLabels = [];
+
+        dataFormatted.forEach((item: TicketListsType) => {
+          const timePerMinute = dayjs.utc(item.deviceDate).format("YYYY-MM-DD HH:mm");
+          if (!dataLabels.includes(timePerMinute)) {
+            dataLabels.push(timePerMinute);
+          }
+        });
+
+        const labels = [];
+        const pid1Value = [];
+        const pid2Value = [];
+        const pid3Value = [];
+        const pid4Value = [];
+        const pid5Value = [];
+        const pid6Value = [];
+        const pid7Value = [];
+        const pid8Value = [];
+        const pid9Value = [];
+        const pid10Value = [];
+        const pid11Value = [];
+        const pid12Value = [];
+
+        dataLabels.sort().forEach(time => {
+          if (time) {
+            const label = time.split(" ");
+            labels.push(label[1])
+      
+            for (let i = 1; i <= 12; i++) {
+              const dataPID = dataFormatted.filter(item => (item.pid === i) && (dayjs.utc(item.deviceDate).format("YYYY-MM-DD HH:mm") == time));
+              const value = setValue(dataPID);
+      
+              switch (i) {
+                case 1:
+                  pid1Value.push(Number(value));
+                  break;
+                case 2:
+                  pid2Value.push(Number(value));
+                  break;
+                case 3:
+                  pid3Value.push(Number(value));
+                  break;
+                case 4:
+                  pid4Value.push(Number(value));
+                  break;
+                case 5:
+                  pid5Value.push(Number(value));
+                  break;
+                case 6:
+                  pid6Value.push(Number(value));
+                  break;
+                case 7:
+                  pid7Value.push(Number(value));
+                  break;
+                case 8:
+                  pid8Value.push(Number(value));
+                  break;
+                case 9:
+                  pid9Value.push(Number(value));
+                  break;
+                case 10:
+                  pid10Value.push(Number(value));
+                  break;
+                case 11:
+                  pid11Value.push(Number(value));
+                  break;
+                case 12:
+                  pid12Value.push(Number(value));
+                  break;
+                default:
+                  break;
+              }
+            }
+          }
+        });
+        
         setChartData({
-          labels: dataChart.labels,
+          labels: labels,
           datasets: [
             {
               label: "PID 7",
-              data: dataChart.pid7Value,
+              data: pid7Value,
               borderColor: "#1c538a",
               fill: false,
             } as any,
             {
               label: "PID 8",
-              data: dataChart.pid8Value,
+              data: pid8Value,
               borderColor: "#a2c7ff",
               fill: false,
             } as any,
             {
               label: "PID 9",
-              data: dataChart.pid9Value,
+              data: pid9Value,
               borderColor: "#2f7ef4",
               fill: false,
             } as any,
             {
               label: "PID 10",
-              data: dataChart.pid10Value,
+              data: pid10Value,
               borderColor: "#30f2f2",
               fill: false,
             } as any,
             {
               label: "PID 11",
-              data: dataChart.pid11Value,
+              data: pid11Value,
               borderColor: "#74e0a5",
               fill: false,
             } as any,
             {
               label: "PID 12",
-              data: dataChart.pid12Value,
+              data: pid12Value,
               borderColor: "#9b46bf",
               fill: false,
             } as any,
