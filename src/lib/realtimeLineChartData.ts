@@ -41,62 +41,64 @@ export default function realTimeLineChartData(data: TicketListsType[]) {
   const pid12Value = [];
 
   lablesSliced.forEach(label => {
-    const labelValue = dayjs.utc(label).format("HH:mm:ss");
-    labels.push(labelValue);
-    for (let i = 1; i <= 12; i++) {
-      const dataByLabel = data.filter((item: TicketListsType) => item.pid === i && dayjs.utc(item.deviceDate).format("HH:mm:ss") === dayjs.utc(label).format("HH:mm:ss"));
-
-      switch (i) {
-        case 1:
-          const value1 = getValue(dataByLabel, pid1Value);
-          pid1Value.push(Number(value1));
-          break;
-        case 2:
-          const value2 = getValue(dataByLabel, pid2Value);
-          pid2Value.push(Number(value2));
-          break;
-        case 3:
-          const value3 = getValue(dataByLabel, pid3Value);
-          pid3Value.push(Number(value3));
-          break;
-        case 4:
-          const value4 = getValue(dataByLabel, pid4Value);
-          pid4Value.push(Number(value4));
-          break;
-        case 5:
-          const value5 = getValue(dataByLabel, pid5Value);
-          pid5Value.push(Number(value5));
-          break;
-        case 6:
-          const value6 = getValue(dataByLabel, pid6Value);
-          pid6Value.push(Number(value6));
-          break;
-        case 7:
-          const value7 = getValue(dataByLabel, pid7Value);
-          pid7Value.push(Number(value7));
-          break;
-        case 8:
-          const value8 = getValue(dataByLabel, pid8Value);
-          pid8Value.push(Number(value8));
-          break;
-        case 9:
-          const value9 = getValue(dataByLabel, pid9Value);
-          pid9Value.push(Number(value9));
-          break;
-        case 10:
-          const value10 = getValue(dataByLabel, pid10Value);
-          pid10Value.push(Number(value10));
-          break;
-        case 11:
-          const value11 = getValue(dataByLabel, pid11Value);
-          pid11Value.push(Number(value11));
-          break;
-        case 12:
-          const value12 = getValue(dataByLabel, pid12Value);
-          pid12Value.push(Number(value12));
-          break;
-        default:
-          break;
+    if (label) {
+      const labelValue = dayjs.utc(label).format("HH:mm:ss");
+      labels.push(labelValue);
+      for (let i = 1; i <= 12; i++) {
+        const dataByLabel = data.filter((item: TicketListsType) => item.pid === i && dayjs.utc(item.deviceDate).format("HH:mm:ss") === dayjs.utc(label).format("HH:mm:ss"));
+  
+        switch (i) {
+          case 1:
+            const value1 = getValue(dataByLabel, pid1Value);
+            pid1Value.push(Number(value1));
+            break;
+          case 2:
+            const value2 = getValue(dataByLabel, pid2Value);
+            pid2Value.push(Number(value2));
+            break;
+          case 3:
+            const value3 = getValue(dataByLabel, pid3Value);
+            pid3Value.push(Number(value3));
+            break;
+          case 4:
+            const value4 = getValue(dataByLabel, pid4Value);
+            pid4Value.push(Number(value4));
+            break;
+          case 5:
+            const value5 = getValue(dataByLabel, pid5Value);
+            pid5Value.push(Number(value5));
+            break;
+          case 6:
+            const value6 = getValue(dataByLabel, pid6Value);
+            pid6Value.push(Number(value6));
+            break;
+          case 7:
+            const value7 = getValue(dataByLabel, pid7Value);
+            pid7Value.push(Number(value7));
+            break;
+          case 8:
+            const value8 = getValue(dataByLabel, pid8Value);
+            pid8Value.push(Number(value8));
+            break;
+          case 9:
+            const value9 = getValue(dataByLabel, pid9Value);
+            pid9Value.push(Number(value9));
+            break;
+          case 10:
+            const value10 = getValue(dataByLabel, pid10Value);
+            pid10Value.push(Number(value10));
+            break;
+          case 11:
+            const value11 = getValue(dataByLabel, pid11Value);
+            pid11Value.push(Number(value11));
+            break;
+          case 12:
+            const value12 = getValue(dataByLabel, pid12Value);
+            pid12Value.push(Number(value12));
+            break;
+          default:
+            break;
+        }
       }
     }
   });
