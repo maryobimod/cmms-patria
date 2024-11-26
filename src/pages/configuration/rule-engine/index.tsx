@@ -20,7 +20,7 @@ export default function RuleEngine() {
       </div>
       <div className="p-4 bg-white rounded">
         <div className="flex items-center justify-between mb-4">
-          <div className="text-[14px] font-bold">Rule Engine</div>
+          <div className="text-[14px] font-bold">Rule Engine test</div>
           <div className="flex items-center gap-2">
             <InputSearch placeholder="Search by Rule Name" />
             <DatePickerComp />
