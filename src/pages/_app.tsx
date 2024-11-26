@@ -15,14 +15,14 @@ export default function App({ Component, pageProps }: AppProps) {
   return <>
     <div className="flex grow">
       <Sidebar />
-      <div style={{ width: "calc(100vw - 15rem)" }}>
+      <div style={{ width: "calc(100vw - 14rem)" }}>
         <Header />
         <main id="content" role="content" className="bg-[#F7F8FA] p-2 overflow-auto" style={{ maxHeight: "calc(100vh - 3.5rem)", height: "calc(100vh - 3.5rem)" }}>
-          <div className="flex h-full gap-3">
+          <div className="flex h-full gap-2">
             <div className="grow">
               <Component {...pageProps} />
             </div>
-            <div className="w-[26rem] flex flex-col">
+            <div className="w-[25rem] flex flex-col">
               <div className="p-4 mb-3 flex flex-col gap-5 bg-white rounded font-plus-jakarta-sans">
                 <Calendar />
                 <Agenda />
