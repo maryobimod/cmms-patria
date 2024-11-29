@@ -51,7 +51,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="border-r h-screen flex flex-col w-[15rem]">
+    <div className="border-r h-screen flex flex-col w-[14rem]">
       <div className="grow">
         <div className="flex items-center font-plus-jakarta-sans px-6 h-[3.5rem] text-[25px] font-bold border-b">
           <Link href="/">

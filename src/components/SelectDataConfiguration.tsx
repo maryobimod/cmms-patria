@@ -1,4 +1,6 @@
-import Select from "react-select";
+import dynamic from 'next/dynamic';
+
+const Select = dynamic(() => import('react-select'), { ssr: false });
 
 export default function SelectDataConfiguration() {
   const options = [
@@ -10,9 +12,10 @@ export default function SelectDataConfiguration() {
   const customStyles = {
     control: (provided: any) => ({
       ...provided,
+      width: "180px",
       minHeight: "2rem",
       maxHeight: "2rem",
-      height: "2rem", 
+      height: "2rem",
       backgroundColor: "transparent"
     }),
     valueContainer: (provided: any) => ({
@@ -20,6 +23,7 @@ export default function SelectDataConfiguration() {
       height: "2rem", 
       margin: "0",  
       padding: "0 0.5rem",
+      text: "no-wrap",
     }),
     dropdownIndicator: (provided: any) => ({
       ...provided,
@@ -40,7 +44,7 @@ export default function SelectDataConfiguration() {
 
   return (
     <Select
-      placeholder="Pilih Opsi"
+      placeholder="Choose Rule Engine"
       options={options}
       styles={customStyles}
       className="min-w-fit"
