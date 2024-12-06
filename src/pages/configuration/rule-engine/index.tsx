@@ -6,6 +6,7 @@ import IconTrash from "@/components/icons/IconTrash";
 import InputSearch from "@/components/InputSearch";
 import SelectDataConfiguration from "@/components/SelectDataConfiguration";
 import { FaPlus } from "react-icons/fa6";
+import { GoTrash } from "react-icons/go";
 import { Formik, Field, Form, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import dynamic from 'next/dynamic';
@@ -13,21 +14,25 @@ import React from "react";
 
 const Select = dynamic(() => import('react-select'), { ssr: false });
 
+interface Formulas {
+  index: number;
+  name: string;
+  operator: string;
+  value: number;
+  unit: string;
+}
+
 interface Values {
   ruleName: string;
   deviceModel: string;
   description: string;
-  formulas: {
-    name: string;
-    operator: string;
-    value: number;
-    unit: string;
-  }[];
+  formulas: Formulas[];
 }
 
 export default function RuleEngine() {
-  const [formulasArray, setFormulasArray] = React.useState<any[]>(["formula1"]);
-  const [unitsArray, setUnitsArray] = React.useState<any[]>([]);
+  const [formulasArray, setFormulasArray] = React.useState<any[]>([
+    { index: 0, name: '', operator: '', value: null, unit: '' },
+  ]);
 
   const modelOptions: {
     value: string;
@@ -42,7 +47,7 @@ export default function RuleEngine() {
     value: string;
     label: string;
   }[] = [
-    { value: "Temperatur", label: "Temperatur" },
+    { value: "Temperature", label: "Temperature" },
     { value: "Pressure", label: "Pressure" },
     { value: "Voltage", label: "Voltage" },
     { value: "Current", label: "Current" },
@@ -80,7 +85,7 @@ export default function RuleEngine() {
       </div>
       <div className="p-4 bg-white rounded">
         <div className="flex items-center justify-between mb-4">
-          <div className="text-[14px] font-bold">Rule Engine test lagi</div>
+          <div className="text-[14px] font-bold">Rule Engine</div>
           <div className="flex items-center gap-2">
             <InputSearch placeholder="Search by Rule Name" />
             <DatePickerComp />
@@ -213,7 +218,7 @@ export default function RuleEngine() {
               >
                  {({ setFieldValue, setFieldTouched, resetForm, errors, touched, values }) => (
                   <Form>
-                    <div className="grid grid-cols-2 gap-2 mb-2">
+                    {/* <div className="grid grid-cols-2 gap-2 mb-2">
                       <div>
                         <label htmlFor="ruleName">Rule Name</label>
                         <Field name="ruleName" type="text" className="input" />
@@ -241,8 +246,8 @@ export default function RuleEngine() {
                           <div className="text-red-500">{errors.deviceModel}</div>
                         ) : null}
                       </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2 mb-2">
+                    </div> */}
+                    {/* <div className="grid grid-cols-2 gap-2 mb-2">
                       <div>
                         <label htmlFor="description">Description</label>
                         <Field name="description" as="textarea" type="text" className="input py-2 h-24" />
@@ -251,7 +256,7 @@ export default function RuleEngine() {
                       <div>
                         <label htmlFor="targetDeviceID">Target Device ID</label>
                       </div>
-                    </div>
+                    </div> */}
                     <div>
                       <label>Formula</label>
                       <div className="flex flex-col gap-2">
@@ -271,10 +276,11 @@ export default function RuleEngine() {
                                 }}
                                 placeholder="Formula"
                                 className="min-w-fit col-span-5"
+                                defaultValue={formulaOptions.find(option => option.value === formulasArray[index]?.name) || ''}
                                 onChange={(option: {value: string}) => {
                                   let unit = '...';
                                   switch (option.value) {
-                                    case 'Temperatur':
+                                    case 'Temperature':
                                       unit = 'C';
                                       break;
                                     case 'Pressure':
@@ -294,16 +300,16 @@ export default function RuleEngine() {
                                       break;
                                   }
 
-                                  values.formulas[index] = {
+                                  formulasArray[index] = {
+                                    index,
                                     name: option.value,
-                                    operator: values.formulas[index]?.operator || '',
-                                    value: values.formulas[index]?.value || null,
+                                    operator: formulasArray[index]?.operator || '',
+                                    value: formulasArray[index]?.value || null,
                                     unit: unit,
                                   }
 
-                                  unitsArray[index] = unit;
-                                  setUnitsArray([...unitsArray]);
-                                  console.log(values.formulas);
+                                  setFormulasArray([...formulasArray]);
+                                  console.log(formulasArray);
                                 }}
                               />
                               {/* Operator */}
@@ -319,14 +325,18 @@ export default function RuleEngine() {
                                 }}
                                 placeholder="Operator"
                                 className="min-w-fit col-span-3"
+                                defaultValue={operatorOptions.find(option => option.value === formulasArray[index]?.operator) || ''}
                                 onChange={(option: {value: string}) => {
-                                  values.formulas[index] = {
-                                    name: values.formulas[index]?.name || '',
+                                  formulasArray[index] = {
+                                    index,
+                                    name: formulasArray[index]?.name || '',
                                     operator: option.value,
-                                    value: values.formulas[index]?.value || null,
-                                    unit: values.formulas[index]?.unit || '',
+                                    value: formulasArray[index]?.value || null,
+                                    unit: formulasArray[index]?.unit || '',
                                   }
-                                  console.log(values.formulas);
+
+                                  setFormulasArray([...formulasArray]);
+                                  console.log(formulasArray);
                                 }}
                               />
                               <Field 
@@ -334,31 +344,37 @@ export default function RuleEngine() {
                                 type="number"
                                 className="input col-span-2"
                                 placeholder="Value"
-                                onChange={(option: {value: string}) => {
-                                  values.formulas[index] = {
-                                    name: values.formulas[index]?.name || '',
-                                    operator: values.formulas[index]?.operator || '',
-                                    value: Number(option.value),
-                                    unit: values.formulas[index]?.unit || '',
+                                onChange={(e: any) => {
+                                  formulasArray[index] = {
+                                    index,
+                                    name: formulasArray[index]?.name || '',
+                                    operator: formulasArray[index]?.operator || '',
+                                    value: Number(e.target.value),
+                                    unit: formulasArray[index]?.unit || '',
                                   }
-                                  console.log(values.formulas);
                                 }}
                               />
                               <div className="col-span-1 flex justify-center items-center">
-                                <span>{unitsArray[index] || '...'}</span>
+                                <span>{formulasArray[index]?.unit || '...'}</span>
                               </div>
                               {index == 0 ? 
                                 <button 
                                   type="button"
                                   className="col-span-1 input flex justify-center items-center bg-[#17a497] rounded"
                                   onClick={() => {
-                                    const number = Number(formula[formula.length - 1]) + 1;
+                                    const number = formulasArray.length + 1;
                                     const newFormula = `formula${number}`;
                                     setFormulasArray([...formulasArray, newFormula]);
                                   }}
                                 ><FaPlus className="text-white text-lg font-bold" /></button> 
                                 : 
-                                null
+                                <button
+                                  type="button"
+                                  className="col-span-1 input flex justify-center items-center bg-[#f7473a] rounded"
+                                  onClick={() => {
+                                    console.log("delete")
+                                  }}
+                                ><GoTrash className="text-white text-lg font-bold" /></button>
                               }
                             </div>
                           )
@@ -366,16 +382,14 @@ export default function RuleEngine() {
                       </div>
                     </div>
             
-                    <div className="flex justify-end mt-3">
+                    <div className="flex justify-end mt-5">
                       <div className="flex gap-2">
                           <button
                             type="button"
                             className="card gap-2 px-4 py-2 bg-[#fae27c]"
                             data-modal-dismiss="true"
                             onClick={() => {
-                              values.formulas = [];
-                              setFormulasArray([]);
-                              setUnitsArray([]);
+                              setFormulasArray([{ index: 0, name: '', operator: '', value: null, unit: '' }]);
                               resetForm();
                               setFieldValue('deviceModel', ''); 
                             }} 
