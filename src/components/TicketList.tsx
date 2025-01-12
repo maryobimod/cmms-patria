@@ -15,7 +15,7 @@ export default function TicketList() {
   useEffect(() => {
     // Referensi ke node "items" di Realtime Database
     const dbRef = ref(database1, "data");
-    const q = query(dbRef, orderByKey(), limitToLast(500));
+    const q = query(dbRef, orderByKey(), limitToLast(300));
     const unsubscribe = onValue(q, async (snapshot) => {
         const data = await snapshot.toJSON();
         if (snapshot.exists()) {
