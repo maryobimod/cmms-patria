@@ -101,7 +101,8 @@ export default function ParameterCategoryChart() {
       </div>
       <div className='-mt-1'>
         <div className='text-[12px] text-center text-[#7D848B] font-inter'>PARAMETER CATEGORY</div>
-        <div className='text-[12px] text-center'>(2 Tickets)</div>
+        {/* <div className='text-[12px] text-center'>(2 Tickets)</div> */}
+        <div className='text-[12px] text-center'>-</div>
       </div>
       <div className='flex items-center gap-2'>
         <div className='flex items-center gap-2'>

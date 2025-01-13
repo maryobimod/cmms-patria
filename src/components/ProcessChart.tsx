@@ -102,7 +102,8 @@ export default function ProcessChart() {
       </div>
       <div className='-mt-1'>
         <div className='text-[12px] text-center text-[#7D848B] font-inter'>PROCESS</div>
-        <div className='text-[12px] text-center'>(128 Tickets)</div>
+        {/* <div className='text-[12px] text-center'>(128 Tickets)</div> */}
+        <div className='text-[12px] text-center'>-</div>
       </div>
       <div className='flex items-center gap-2'>
         <div className='flex items-center gap-2'>

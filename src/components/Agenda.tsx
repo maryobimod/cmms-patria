@@ -24,7 +24,7 @@ export default function Agenda() {
           <div className="border rounded h-10 bg-white w-[3px]"></div>
           <div>
             <span className="block">Total Tickets</span>
-            <span className="block">132</span>
+            <span className="block">-</span>
           </div>
         </div>
         <div className="grow p-3 flex gap-3 items-center bg-[#c1d8fc] rounded">
@@ -32,7 +32,7 @@ export default function Agenda() {
           <div className="border rounded h-10 bg-white w-[3px]"></div>
           <div>
             <span className="block">Total Acknowledged</span>
-            <span className="block">19</span>
+            <span className="block">-</span>
           </div>
         </div>
       </div>
