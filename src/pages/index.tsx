@@ -25,7 +25,7 @@ export default function Dashboard() {
           <div><TfiMore className="text-lg text-[#a7a9aa]" /></div>
         </div>
         <div>
-          <div className="my-2">
+          <div className="my-2 mb-3">
             <RealtimeLineChart1 />
           </div>
           <div>
